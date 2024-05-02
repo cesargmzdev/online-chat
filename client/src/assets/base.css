@@ -1,0 +1,9 @@
+:root {
+  color-scheme: light dark;
+  --myGreenColor: #00ffe0;
+  --myBlackColor: #212121;
+}
+body {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(45deg, rgb(0, 0, 0) 0%, rgba(0, 213, 255, 0.186) 100%);
+}
