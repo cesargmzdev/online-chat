@@ -2,19 +2,24 @@
 require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
-  // root: true,
-  env: {
-    node: true,
-    browser: true,
-  },
+  root: true,
+  env: {browser: true, node: true, es2021: true},
   extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/eslint-config-prettier/skip-formatting',
+    'plugin:vue/vue3-strongly-recommended',
     'eslint:recommended',
-    'prettier'
+    '@vue/eslint-config-prettier/skip-formatting'
   ],
   parserOptions: {
     ecmaVersion: 'latest'
   },
-  ignorePatterns: ['node_modules', 'dist', 'public'],
+  ignorePatterns: ['node_modules', 'dist', 'public', '.eslintrc.cjs'],
+  overrides: [
+    {
+      files: ['packages/server/**'],
+      extends: [
+        'eslint:recommended',
+        'prettier'
+      ],
+    },
+  ],
 };
