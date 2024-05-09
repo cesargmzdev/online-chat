@@ -19,48 +19,56 @@ const events = (socket) => {
   });
 
   socket.on('joinRoom', async (input, loggedUserToken, time) => {
-    const data = await fetchUser(input);
-    const loggedUser = await fetchLoggedUser(loggedUserToken);
+    const fetchedUserData = await fetchUser(input);
+    const loggedUsername = await fetchLoggedUser(loggedUserToken);
 
-    if (data.username && loggedUser) {
-      const room = [loggedUser, input].sort().join('-');
+    const fetchedUserDataUsername = fetchedUserData.username.username.toString().toLowerCase();
+    loggedUsername.toString().toLowerCase();
+
+    console.log(`events: ${fetchedUserDataUsername} - ${loggedUsername}`);
+
+    if (fetchedUserDataUsername === loggedUsername) {
+      socket.emit('error', 'You cannot chat with yourself');
+      console.log('You cannot chat with yourself');
+      return;
+    }
+
+    if (fetchedUserData.username && loggedUsername) {
+      const room = [loggedUsername, input].sort().join('-');
       console.log('room: ', room);
 
       // If the room doesn't exist, create it and add the first user
       if (!io.sockets.adapter.rooms.has(room)) {
         socket.join(room);
-        console.log('loggedUser: ', loggedUser);
+        console.log('loggedUser: ', loggedUsername);
         console.log(`room created: ${room}`);
         socket.emit('room', room);
-        io.to(room).emit(
-          'roomChat',
-          io.to(room).emit('roomChat', {
-            message: {
-              message: `created the room`,
-              username: loggedUser,
-              time: time
-            }
-          })
-        );
+        io.to(room).emit('roomChat', {
+          message: {
+            message: `created the room ${room} and joined the room`,
+            username: loggedUsername,
+            time: time
+          }
+        });
         listRooms(socket);
       }
       // If the room already exists, add the second user
       else {
         socket.join(room);
-        console.log('loggedUser: ', loggedUser);
+        console.log('loggedUser: ', loggedUsername);
         console.log(`joined existing room: ${room}`);
         socket.emit('room', room);
         io.to(room).emit('roomChat', {
           message: {
             message: `joined the room`,
-            username: loggedUser,
+            username: loggedUsername,
             time: time
           }
         });
       }
-    } else if (data.error) {
-      socket.emit('error', data.error);
-      console.error('Error:', data.error);
+    } else if (fetchedUserData.error) {
+      socket.emit('error', fetchedUserData.error);
+      console.error('Error:', fetchedUserData.error);
     }
   });
 

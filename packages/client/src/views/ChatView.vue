@@ -13,7 +13,7 @@ let currentRoom = ref('global');
 </script>
 
 <template>
-  <div class="h-dvh w-dvw flex flex-col">
+  <div class="h-dvh w-dvw flex flex-col px-[20dvw]">
     <HeaderComponent custom-classes="pt-6" />
     <ChatViewHeader />
     <main class="flex-grow mb-2">

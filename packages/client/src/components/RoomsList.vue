@@ -1,7 +1,7 @@
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 import socket from '@/utils/clientSocket';
-import JoinRoom from '@/components/JoinRoom.vue';
+import JoinRoomDialog from './JoinRoomDialog.vue';
 
 const arrayRooms = ref([]);
 
@@ -25,7 +25,7 @@ const setRoom = (room) => {
   console.log(room);
 };
 
-const showJoinRoomForm = ref(false);
+const showJoinRoomForm = ref(true);
 const toggleJoinRoomForm = () => {
   showJoinRoomForm.value = !showJoinRoomForm.value;
 };
@@ -44,6 +44,6 @@ const toggleJoinRoomForm = () => {
         <button type="button" @click="setRoom(room)">{{ room }}</button>
       </li>
     </ul>
-    <JoinRoom v-if="showJoinRoomForm" />
+    <JoinRoomDialog :show="showJoinRoomForm" :toggle="toggleJoinRoomForm" />
   </div>
 </template>

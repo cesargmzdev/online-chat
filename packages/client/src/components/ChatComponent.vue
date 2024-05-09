@@ -18,7 +18,10 @@ onMounted(async () => {
 });
 
 const props = defineProps({
-  room: String
+  room: {
+    type: String,
+    default: ''
+  }
 });
 
 const sendMessage = (e) => {
@@ -58,7 +61,7 @@ socket.on('globalChat', (data) => {
 
 socket.on('roomChat', (data) => {
   chatStore.addMessage(data); // add message to the store
-  console.log(`${data} from ${data.room}`);
+  console.log(`${data.message} from ${data.username}`);
 
   nextTick(() => {
     const chatDiv = document.querySelector('#chatDiv');
