@@ -22,10 +22,10 @@ const emit = defineEmits(['room-changed']);
 const setRoom = (room) => {
   currentRoom.value = room;
   emit('room-changed', room);
-  console.log(room);
+  console.log(`room changed to: ${room}`);
 };
 
-const showJoinRoomForm = ref(true);
+const showJoinRoomForm = ref(false);
 const toggleJoinRoomForm = () => {
   showJoinRoomForm.value = !showJoinRoomForm.value;
 };

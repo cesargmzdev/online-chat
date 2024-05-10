@@ -18,15 +18,20 @@ const joinRoom = (e) => {
   const user = e.target[0].value;
   const loggedUserToken = sessionStorage.getItem('jwt');
   socket.emit('joinRoom', user, loggedUserToken, time);
+
+  // Remove old listeners
+  socket.off('room');
+  socket.off('error');
+
   socket.on('room', (room) => {
     console.log(room);
-    alert(`You joined room: ${room}`);
+    alert(`${room} joined successfully!`);
+    props.toggle();
   });
   socket.on('error', (error) => {
     console.log(error);
     alert(error);
   });
-  props.toggle();
 };
 </script>
 

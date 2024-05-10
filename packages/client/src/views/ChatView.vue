@@ -1,15 +1,37 @@
 <script setup>
-import { ref, provide } from 'vue';
+import { ref, onMounted, onUnmounted, provide } from 'vue';
 import HeaderComponent from '@/components/HeaderComponent.vue';
 import ChatViewHeader from '@/components/ChatViewHeader.vue';
 import RoomsList from '@/components/RoomsList.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
 import ChatComponent from '@/components/ChatComponent.vue';
+import socket from '@/utils/clientSocket';
+import { useChatStore } from '@/store/store';
 
 let show = ref(false);
 provide('show', show);
-
 let currentRoom = ref('global');
+let chatStore = useChatStore();
+
+const handleGlobalChat = (data) => {
+  chatStore.addMessage(data); // add message to the store
+};
+
+const handleRoomChat = (data) => {
+  chatStore.addMessage(data); // add message to the store
+};
+
+onMounted(() => {
+  // Set up event listeners
+  socket.on('globalChat', handleGlobalChat);
+  socket.on('roomChat', handleRoomChat);
+});
+
+onUnmounted(() => {
+  // Remove event listeners
+  socket.off('globalChat', handleGlobalChat);
+  socket.off('roomChat', handleRoomChat);
+});
 </script>
 
 <template>
