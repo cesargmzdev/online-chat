@@ -23,8 +23,12 @@ const fetchLoggedUser = async (token) => {
 const listRooms = (socket) => {
   const rooms = Array.from(socket.rooms);
   rooms.shift(); // Remove the first room, which is the socket's own room
+  // Ensure 'global' is always in the list of rooms
+  if (!rooms.includes('global')) {
+    rooms.unshift('global');
+  }
   for (const room of rooms) {
-    console.log(room);
+    console.log(`room added ${room}`);
   }
   socket.emit('roomCount', rooms);
 };

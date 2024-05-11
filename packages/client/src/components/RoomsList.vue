@@ -6,21 +6,18 @@ import JoinRoomDialog from './JoinRoomDialog.vue';
 const arrayRooms = ref([]);
 
 socket.emit('listRooms');
+
 socket.on('roomCount', (rooms) => {
   if (rooms.length <= 0) {
-    arrayRooms.value = ['No rooms'];
     console.log(arrayRooms.value);
   } else {
     arrayRooms.value = rooms;
   }
 });
 
-const currentRoom = ref('global');
-
 const emit = defineEmits(['room-changed']);
 
 const setRoom = (room) => {
-  currentRoom.value = room;
   emit('room-changed', room);
   console.log(`room changed to: ${room}`);
 };

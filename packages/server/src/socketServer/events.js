@@ -1,5 +1,5 @@
-import {io} from '##/socketServer/socketServerConfig.js';
-import {fetchUser, fetchLoggedUser, listRooms} from '##/socketServer/utils.js';
+import { io } from '##/socketServer/socketServerConfig.js';
+import { fetchUser, fetchLoggedUser, listRooms } from '##/socketServer/utils.js';
 
 const events = (socket) => {
   socket.on('setUsername', (username) => {
@@ -9,12 +9,12 @@ const events = (socket) => {
   });
 
   socket.on('globalChat', (messageData) => {
-    io.emit('globalChat', {messageData: messageData});
+    io.emit('globalChat', { messageData: messageData });
     console.log(`Global - Message: ${messageData.message}`);
   });
 
   socket.on('roomChat', (messageData) => {
-    io.to(messageData.room).emit('roomChat', {messageData: messageData});
+    io.to(messageData.room).emit('roomChat', { messageData: messageData });
     console.log(`Room: ${messageData.room} - Message: ${messageData.message}`);
   });
 
@@ -43,7 +43,7 @@ const events = (socket) => {
         console.log('You are already in this room');
         return;
       }
-      
+
       // If the room doesn't exist in the server, create it and add the first user and return
       if (!io.sockets.adapter.rooms.has(room)) {
         socket.join(room);

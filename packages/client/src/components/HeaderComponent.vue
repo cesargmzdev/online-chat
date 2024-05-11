@@ -2,7 +2,10 @@
 import WebSocketLogo from '@/components/icons/WebSocketLogo.vue';
 
 defineProps({
-  customClasses: String
+  customClasses: {
+    type: String,
+    default: ''
+  }
 });
 </script>
 

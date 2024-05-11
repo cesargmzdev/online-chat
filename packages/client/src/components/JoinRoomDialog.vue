@@ -1,6 +1,5 @@
 <script setup>
 import { TransitionRoot, Dialog, DialogTitle, DialogPanel, TransitionChild } from '@headlessui/vue';
-import { defineProps } from 'vue';
 import socket from '@/utils/clientSocket';
 
 const props = defineProps({
@@ -24,7 +23,7 @@ const joinRoom = (e) => {
   socket.off('error');
 
   socket.on('room', (room) => {
-    console.log(room);
+    console.log(`room added ${room}`);
     alert(`${room} joined successfully!`);
     props.toggle();
   });

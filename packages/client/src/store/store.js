@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 export const useChatStore = defineStore({
   id: 'chat',
   state: () => ({
-    messages: []
+    messages: JSON.parse(sessionStorage.getItem('messages')) || []
   }),
   getters: {
     getMessages() {
@@ -14,6 +14,11 @@ export const useChatStore = defineStore({
   actions: {
     addMessage(message) {
       this.messages.push(message);
+      sessionStorage.setItem('messages', JSON.stringify(this.messages));
+    },
+    clearMessages() {
+      this.messages = [];
+      sessionStorage.setItem('messages', JSON.stringify(this.messages));
     }
   }
 });
