@@ -25,6 +25,21 @@ onMounted(() => {
   // Set up event listeners
   socket.on('globalChat', handleGlobalChat);
   socket.on('roomChat', handleRoomChat);
+  if (!sessionStorage.getItem('rooms')) {
+    sessionStorage.setItem(
+      'rooms',
+      JSON.stringify([{ roomName: 'global', roomMember: null, user: null, currentTime: null }])
+    );
+    return;
+  }
+  // Rejoin each room stored in sessionStorage
+  const rooms = JSON.parse(sessionStorage.getItem('rooms') || '[]');
+  rooms.forEach(({ roomName, roomMember, loggedUserToken, currentTime }) => {
+    if (roomName === 'global') {
+      return;
+    }
+    socket.emit('joinRoom', roomMember, loggedUserToken, currentTime);
+  });
 });
 
 onUnmounted(() => {

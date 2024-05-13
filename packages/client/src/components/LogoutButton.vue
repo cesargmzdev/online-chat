@@ -4,6 +4,7 @@ import socket from '@/utils/clientSocket.js';
 
 const handleLogout = () => {
   sessionStorage.removeItem('jwt');
+  sessionStorage.removeItem('rooms');
   alert('logged out');
   socket.disconnect();
   console.log('disconnected from socket server');

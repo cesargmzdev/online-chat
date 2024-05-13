@@ -22,6 +22,18 @@ const events = (socket) => {
     const fetchedUserData = await fetchUser(input);
     const loggedUsername = await fetchLoggedUser(loggedUserToken);
 
+    if (fetchedUserData.error) {
+      socket.emit('error', 'User not found in the database');
+      console.error('User not found in the database');
+      return;
+    }
+
+    if (loggedUsername.error) {
+      socket.emit('error', 'User not found in the database');
+      console.error('User not found in the database');
+      return;
+    }
+
     const fetchedUserDataUsername = fetchedUserData.username.username.toString().toLowerCase();
     loggedUsername.toString().toLowerCase();
 
@@ -85,6 +97,26 @@ const events = (socket) => {
   });
 
   socket.on('listRooms', () => {
+    listRooms(socket);
+  });
+
+  socket.on('leaveRoom', async (room, loggedUserToken, time) => {
+    if (socket.rooms === 1) {
+      socket.emit('error', 'You are not in any room');
+      console.log('You are not in any room');
+      return;
+    }
+    const loggedUsername = await fetchLoggedUser(loggedUserToken);
+    socket.leave(room);
+    // logs what rooms the user has left
+    console.log('Left rooms:', socket.rooms);
+    io.to(room).emit('roomChat', {
+      messageData: {
+        message: `left the room - ${room}`,
+        username: loggedUsername,
+        time: time
+      }
+    });
     listRooms(socket);
   });
 

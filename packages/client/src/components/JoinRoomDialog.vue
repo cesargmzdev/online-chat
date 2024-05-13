@@ -10,21 +10,30 @@ const props = defineProps({
   }
 });
 
-const time = new Date().toLocaleTimeString();
+const currentTime = new Date().toLocaleTimeString();
 
 const joinRoom = (e) => {
   e.preventDefault();
-  const user = e.target[0].value;
+  const roomMember = e.target[0].value;
   const loggedUserToken = sessionStorage.getItem('jwt');
-  socket.emit('joinRoom', user, loggedUserToken, time);
+  socket.emit('joinRoom', roomMember, loggedUserToken, currentTime);
+  console.log(roomMember, loggedUserToken, currentTime);
 
   // Remove old listeners
   socket.off('room');
   socket.off('error');
 
   socket.on('room', (room) => {
-    console.log(`room added ${room}`);
-    alert(`${room} joined successfully!`);
+    // Store room and user in sessionStorage
+    let rooms = JSON.parse(sessionStorage.getItem('rooms')) || [];
+    rooms.push({
+      roomName: room,
+      roomMember: roomMember,
+      loggedUserToken: loggedUserToken,
+      currentTime: currentTime
+    });
+    sessionStorage.setItem('rooms', JSON.stringify(rooms));
+    alert(`${room} added successfully!`);
     props.toggle();
   });
   socket.on('error', (error) => {
