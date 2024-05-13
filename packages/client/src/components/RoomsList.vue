@@ -1,15 +1,17 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import socket from '@/utils/clientSocket';
 import JoinRoomDialog from './JoinRoomDialog.vue';
 
 const arrayRooms = ref([]);
 const reversedArrayRooms = computed(() => [...arrayRooms.value].reverse());
 
-socket.emit('listRooms');
+onMounted(() => {
+  socket.emit('listRooms');
 
-socket.on('roomCount', (rooms) => {
-  arrayRooms.value = [...new Set([...arrayRooms.value, ...rooms])];
+  socket.on('roomCount', (rooms) => {
+    arrayRooms.value = [...new Set([...arrayRooms.value, ...rooms])];
+  });
 });
 
 const emit = defineEmits(['room-changed']);

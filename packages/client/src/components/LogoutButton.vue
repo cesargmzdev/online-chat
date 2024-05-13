@@ -3,11 +3,19 @@ import router from '@/router';
 import socket from '@/utils/clientSocket.js';
 
 const handleLogout = () => {
-  sessionStorage.removeItem('jwt');
+  const storedRooms = JSON.parse(sessionStorage.getItem('rooms') || '[]');
+  storedRooms.forEach(({ roomName, loggedUserToken, currentTime }) => {
+    if (roomName === 'global') {
+      return;
+    }
+    socket.emit('leaveRoom', roomName, loggedUserToken, currentTime);
+  });
   sessionStorage.removeItem('rooms');
-  alert('logged out');
+  sessionStorage.removeItem('messages');
+  sessionStorage.removeItem('jwt');
   socket.disconnect();
   console.log('disconnected from socket server');
+  alert('logged out');
   router.push('/');
 };
 </script>

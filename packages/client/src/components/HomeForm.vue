@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import router from '@/router';
+import socket from '@/utils/clientSocket';
 
 const showSignupForm = ref(false);
 
@@ -55,10 +56,12 @@ const handleLoginSubmit = (e) => {
       }
       // check if there is already a token in the session storage
       if (sessionStorage.getItem('jwt')) {
+        socket.connect();
         alert(data.message);
         router.push('/chat');
       } else {
         sessionStorage.setItem('jwt', data.token);
+        socket.connect();
         alert(data.message);
         router.push('/chat');
       }
