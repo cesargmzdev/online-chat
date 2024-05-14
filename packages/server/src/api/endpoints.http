@@ -1,6 +1,29 @@
+### Signup
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "password": "testpassword"
+}
+
+### Find User
 POST http://localhost:3000/findUser
 Content-Type: application/json
 
 {
-    "username": "cesar"
+    "username": "testuser"
 }
+
+### Login
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "password": "testpassword"
+}
+
+### Get User
+GET http://localhost:3000/getUser
+Authorization: Bearer <token>

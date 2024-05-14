@@ -9,14 +9,10 @@ const router = createRouter({
       component: () => import('../views/AuthView.vue')
     },
     {
-      path: '/chat/global',
+      path: '/chat',
       name: 'chat',
       component: () => import('../views/ChatView.vue'),
       meta: { requiresAuth: true }
-    },
-    {
-      path: '/chat',
-      redirect: '/chat/global'
     }
   ]
 });

@@ -1,0 +1,66 @@
+{
+  "name": "online-chat API",
+  "description": "API for online chat web app management",
+  "auth": "required",
+  "baseUrl": "http://localhost:3000",
+  "endpoints": [
+    {
+      "name": "Signup",
+      "path": "/signup",
+      "method": "POST",
+      "params": [
+        {
+          "name": "username",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "password",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Find User",
+      "path": "/findUser",
+      "method": "POST",
+      "params": [
+        {
+          "name": "username",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "path": "/login",
+      "method": "POST",
+      "params": [
+        {
+          "name": "username",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "password",
+          "type": "string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "Get User",
+      "path": "/getUser",
+      "method": "GET",
+      "headers": [
+        {
+          "name": "Authorization",
+          "type": "string",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
