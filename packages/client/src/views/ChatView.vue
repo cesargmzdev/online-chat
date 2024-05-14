@@ -14,11 +14,11 @@ let currentRoom = ref('global');
 let chatStore = useChatStore();
 
 const handleGlobalChat = (data) => {
-  chatStore.addMessage(data); // add global message to the store
+  chatStore.addMessage(currentRoom.value, data); // add global message to the store
 };
 
 const handleRoomChat = (data) => {
-  chatStore.addMessage(data); // add room message to the store
+  chatStore.addMessage(currentRoom.value, data); // add room message to the store
 };
 
 onMounted(() => {
@@ -52,9 +52,9 @@ onUnmounted(() => {
 <template>
   <div class="h-dvh w-dvw flex flex-col px-[20dvw]">
     <HeaderComponent custom-classes="pt-6" />
-    <ChatViewHeader :room="currentRoom" />
+    <ChatViewHeader :show="show === false" :room="currentRoom" />
     <main class="flex-grow mb-2">
-      <RoomsList v-if="show" @room-changed="currentRoom = $event" />
+      <RoomsList v-if="show" @room-changed="currentRoom = $event" @unmount="show = false" />
       <ChatComponent v-else :room="currentRoom" />
     </main>
     <FooterComponent />

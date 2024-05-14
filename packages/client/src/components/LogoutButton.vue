@@ -1,6 +1,9 @@
 <script setup>
 import router from '@/router';
 import socket from '@/utils/clientSocket.js';
+import { useChatStore } from '@/store/store';
+
+const chatStore = useChatStore();
 
 const handleLogout = () => {
   const storedRooms = JSON.parse(sessionStorage.getItem('rooms') || '[]');
@@ -11,10 +14,10 @@ const handleLogout = () => {
     socket.emit('leaveRoom', roomName, loggedUserToken, currentTime);
   });
   sessionStorage.removeItem('rooms');
+  chatStore.clearMessages();
   sessionStorage.removeItem('messages');
   sessionStorage.removeItem('jwt');
   socket.disconnect();
-  console.log('disconnected from socket server');
   alert('logged out');
   router.push('/');
 };

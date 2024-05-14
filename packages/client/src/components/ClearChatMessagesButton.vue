@@ -1,10 +1,17 @@
 <script setup>
 import { useChatStore } from '@/store/store';
 
+const props = defineProps({
+  room: {
+    type: String,
+    default: ''
+  }
+});
+
 const chatStore = useChatStore();
 
 const clearChatMessages = () => {
-  chatStore.clearMessages();
+  chatStore.clearMessages(props.room);
 };
 </script>
 

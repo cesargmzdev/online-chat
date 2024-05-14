@@ -15,6 +15,9 @@ const props = defineProps({
   room: {
     type: String,
     default: ''
+  },
+  show: {
+    type: Boolean
   }
 });
 </script>
@@ -26,8 +29,8 @@ const props = defineProps({
     <p>Actual room: {{ props.room }}</p>
     <LogoutButton />
   </section>
-  <section class="flex justify-between">
+  <section class="flex justify-between" v-if="props.show">
     <h3 class="font-tech text-[var(--myGreenColor)] self-center text-lg">Chats</h3>
-    <ClearChatMessagesButton />
+    <ClearChatMessagesButton :room="props.room" />
   </section>
 </template>

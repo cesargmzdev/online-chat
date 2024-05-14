@@ -3,6 +3,8 @@ import { ref, computed, onMounted } from 'vue';
 import socket from '@/utils/clientSocket';
 import JoinRoomDialog from './JoinRoomDialog.vue';
 
+const emit = defineEmits(['room-changed', 'unmount']);
+
 const arrayRooms = ref([]);
 const reversedArrayRooms = computed(() => [...arrayRooms.value].reverse());
 
@@ -14,10 +16,9 @@ onMounted(() => {
   });
 });
 
-const emit = defineEmits(['room-changed']);
-
 const setRoom = (room) => {
   emit('room-changed', room);
+  emit('unmount');
   alert(`room set to: ${room}`);
   console.log(`room changed to: ${room}`);
 };

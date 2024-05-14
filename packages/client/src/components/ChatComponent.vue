@@ -1,11 +1,20 @@
 <script setup>
-import { ref, onMounted, nextTick, watch, TransitionGroup } from 'vue';
+import { ref, onMounted, nextTick, watch, TransitionGroup, computed } from 'vue';
 import socket from '@/utils/clientSocket';
 import getCurrentUser from '@/utils/getCurrentUser';
 import { useChatStore } from '@/store/store';
 
+const props = defineProps({
+  room: {
+    type: String,
+    default: ''
+  }
+});
+
 let currentUser = ref(null);
-let chatStore = useChatStore();
+const chatStore = useChatStore();
+
+const messages = computed(() => chatStore.getMessages(props.room));
 
 onMounted(async () => {
   currentUser.value = await getCurrentUser();
@@ -24,13 +33,6 @@ watch(chatStore.$state, () => {
       chatDiv.scrollTop = chatDiv.scrollHeight;
     }
   });
-});
-
-const props = defineProps({
-  room: {
-    type: String,
-    default: ''
-  }
 });
 
 const sendMessage = (e) => {
@@ -60,7 +62,7 @@ defineExpose({ TransitionGroup });
     <div class="flex-grow h-48 overflow-y-auto" id="chatDiv">
       <TransitionGroup name="list" tag="div">
         <div
-          v-for="data in chatStore.getMessages"
+          v-for="data in messages"
           :key="data.messageData"
           class="p-2 border-b-2"
           :class="{
