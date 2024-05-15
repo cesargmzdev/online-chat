@@ -20,6 +20,10 @@ export const useChatStore = defineStore({
     clearMessages(room) {
       this.messages[room] = [];
       sessionStorage.setItem('messages', JSON.stringify(this.messages));
+    },
+    clearAllMessages() {
+      this.messages = {};
+      sessionStorage.removeItem('messages');
     }
   }
 });

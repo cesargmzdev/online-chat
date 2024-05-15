@@ -66,6 +66,7 @@ const events = (socket) => {
           // Only send join messages if it's not a rejoin
           io.to(room).emit('roomChat', {
             messageData: {
+              room: room,
               message: `created the room ${room} and joined the room`,
               username: loggedUsername,
               time: time
@@ -92,6 +93,7 @@ const events = (socket) => {
         // Only send join messages if it's not a rejoin
         io.to(room).emit('roomChat', {
           messageData: {
+            room: room,
             message: `joined the room - ${room}`,
             username: loggedUsername,
             time: time
@@ -118,6 +120,7 @@ const events = (socket) => {
     console.log('Left rooms:', socket.rooms);
     io.to(room).emit('roomChat', {
       messageData: {
+        room: room,
         message: `left the room - ${room}`,
         username: loggedUsername,
         time: time

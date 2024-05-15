@@ -8,17 +8,17 @@ import ChatComponent from '@/components/ChatComponent.vue';
 import socket from '@/utils/clientSocket';
 import { useChatStore } from '@/store/store';
 
-let show = ref(false);
+const show = ref(false);
 provide('show', show);
-let currentRoom = ref('global');
-let chatStore = useChatStore();
+const currentRoom = ref('global');
+const chatStore = useChatStore();
 
 const handleGlobalChat = (data) => {
-  chatStore.addMessage(currentRoom.value, data); // add global message to the store
+  chatStore.addMessage('global', data); // add global message to the 'global' room
 };
 
 const handleRoomChat = (data) => {
-  chatStore.addMessage(currentRoom.value, data); // add room message to the store
+  chatStore.addMessage(data.messageData.room, data); // add room message to its respective room
 };
 
 onMounted(() => {

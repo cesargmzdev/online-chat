@@ -61,7 +61,9 @@ const leaveAllAddedRooms = async () => {
     </div>
     <ul>
       <li v-for="room in reversedArrayRooms" :key="room">
-        <button type="button" @click="setRoom(room)">{{ room }}</button>
+        <button type="button" @click="setRoom(room)" class="border-2 rounded-md p-1 m-2">
+          {{ room }}
+        </button>
       </li>
     </ul>
     <JoinRoomDialog :show="showJoinRoomForm" :toggle="toggleJoinRoomForm" />

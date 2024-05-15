@@ -5,17 +5,16 @@ import { useChatStore } from '@/store/store';
 
 const chatStore = useChatStore();
 
-const handleLogout = () => {
+const handleLogout = async () => {
   const storedRooms = JSON.parse(sessionStorage.getItem('rooms') || '[]');
-  storedRooms.forEach(({ roomName, loggedUserToken, currentTime }) => {
+  await storedRooms.forEach(({ roomName, loggedUserToken, currentTime }) => {
     if (roomName === 'global') {
       return;
     }
     socket.emit('leaveRoom', roomName, loggedUserToken, currentTime);
   });
   sessionStorage.removeItem('rooms');
-  chatStore.clearMessages();
-  sessionStorage.removeItem('messages');
+  chatStore.clearAllMessages();
   sessionStorage.removeItem('jwt');
   socket.disconnect();
   alert('logged out');
