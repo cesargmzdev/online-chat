@@ -38,7 +38,7 @@ onMounted(() => {
     if (roomName === 'global') {
       return;
     }
-    socket.emit('joinRoom', roomMember, loggedUserToken, currentTime);
+    socket.emit('joinRoom', roomMember, loggedUserToken, currentTime, true);
   });
 });
 

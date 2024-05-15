@@ -11,7 +11,7 @@ const props = defineProps({
   }
 });
 
-let currentUser = ref(null);
+const currentUser = ref(null);
 const chatStore = useChatStore();
 
 const messages = computed(() => chatStore.getMessages(props.room));

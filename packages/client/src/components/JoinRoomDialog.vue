@@ -16,7 +16,7 @@ const joinRoom = (e) => {
   e.preventDefault();
   const roomMember = e.target[0].value;
   const loggedUserToken = sessionStorage.getItem('jwt');
-  socket.emit('joinRoom', roomMember, loggedUserToken, currentTime);
+  socket.emit('joinRoom', roomMember, loggedUserToken, currentTime, false);
   console.log(roomMember, loggedUserToken, currentTime);
 
   // Remove old listeners

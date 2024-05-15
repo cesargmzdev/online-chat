@@ -18,7 +18,7 @@ const events = (socket) => {
     console.log(`Room: ${messageData.room} - Message: ${messageData.message}`);
   });
 
-  socket.on('joinRoom', async (input, loggedUserToken, time) => {
+  socket.on('joinRoom', async (input, loggedUserToken, time, reJoin) => {
     const fetchedUserData = await fetchUser(input);
     const loggedUsername = await fetchLoggedUser(loggedUserToken);
 
@@ -62,13 +62,16 @@ const events = (socket) => {
         console.log('loggedUser: ', loggedUsername);
         console.log(`room created: ${room}`);
         socket.emit('room', room);
-        io.to(room).emit('roomChat', {
-          messageData: {
-            message: `created the room ${room} and joined the room`,
-            username: loggedUsername,
-            time: time
-          }
-        });
+        if (!reJoin) {
+          // Only send join messages if it's not a rejoin
+          io.to(room).emit('roomChat', {
+            messageData: {
+              message: `created the room ${room} and joined the room`,
+              username: loggedUsername,
+              time: time
+            }
+          });
+        }
         listRooms(socket);
         return;
       }
@@ -85,13 +88,16 @@ const events = (socket) => {
       console.log('loggedUser: ', loggedUsername);
       console.log(`joined existing room: ${room}`);
       socket.emit('room', room);
-      io.to(room).emit('roomChat', {
-        messageData: {
-          message: `joined the room - ${room}`,
-          username: loggedUsername,
-          time: time
-        }
-      });
+      if (!reJoin) {
+        // Only send join messages if it's not a rejoin
+        io.to(room).emit('roomChat', {
+          messageData: {
+            message: `joined the room - ${room}`,
+            username: loggedUsername,
+            time: time
+          }
+        });
+      }
       listRooms(socket);
     }
   });
