@@ -3,6 +3,7 @@ import { ref, onMounted, nextTick, watch, TransitionGroup, computed } from 'vue'
 import socket from '@/utils/clientSocket';
 import getCurrentUser from '@/utils/getCurrentUser';
 import { useChatStore } from '@/store/store';
+import DownloadIcon from '@/components/icons/DownloadIcon.vue';
 
 const props = defineProps({
   room: {
@@ -35,22 +36,47 @@ watch(chatStore.$state, () => {
   });
 });
 
+const fileUrl = ref(null);
+
 const sendMessage = (e) => {
   e.preventDefault();
   const message = e.target[0].value;
+  const data = {
+    message,
+    username: currentUser.value,
+    time: new Date().toLocaleTimeString()
+  };
+  if (fileUrl.value) {
+    data.fileUrl = fileUrl.value;
+    data.fileName = e.target[1].files[0].name;
+  }
   if (props.room !== 'global') {
-    socket.emit('roomChat', {
-      message,
-      username: currentUser.value,
-      room: props.room,
-      time: new Date().toLocaleTimeString()
-    });
+    data.room = props.room;
+    socket.emit('roomChat', data);
   } else {
-    socket.emit('globalChat', {
-      message,
-      username: currentUser.value,
-      time: new Date().toLocaleTimeString()
-    });
+    socket.emit('globalChat', data);
+  }
+  // Reset the fileUrl ref
+  fileUrl.value = null;
+};
+
+const disabled = ref(false);
+
+const handleFileUpload = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const blobUrl = URL.createObjectURL(new Blob([e.target.result]));
+      // Store the blobUrl in a ref to be used when sending the message
+      fileUrl.value = blobUrl;
+      // Disable the text input
+      disabled.value = true;
+    };
+    reader.readAsArrayBuffer(file);
+  } else {
+    // If no file is selected (i.e., the user has removed the file), enable the text input
+    disabled.value = false;
   }
 };
 
@@ -83,12 +109,23 @@ defineExpose({ TransitionGroup });
             </div>
             <hr class="w-full text-white pb-3" />
             <span>{{ data.messageData.message }}</span>
+            <div
+              v-if="data.messageData.fileName"
+              class="flex gap-5"
+              :class="{ 'flex-row-reverse': data.messageData.username === currentUser }"
+            >
+              <span>{{ data.messageData.fileName }}</span>
+              <a :href="data.messageData.fileUrl" :download="data.messageData.fileName"
+                ><DownloadIcon
+              /></a>
+            </div>
           </div>
         </div>
       </TransitionGroup>
     </div>
     <form class="flex justify-between" @submit="sendMessage">
-      <input type="text" required class="flex-grow" />
+      <input type="text" :disabled="disabled" required class="flex-grow" />
+      <input type="file" ref="inputFile" @change="handleFileUpload" />
       <button type="submit" class="px-4 rounded-md border-2">Send</button>
     </form>
   </div>
