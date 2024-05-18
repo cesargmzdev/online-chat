@@ -3,7 +3,7 @@ import { ref, onMounted, nextTick, watch, TransitionGroup, computed } from 'vue'
 import socket from '@/utils/clientSocket';
 import getCurrentUser from '@/utils/getCurrentUser';
 import { useChatStore } from '@/store/store';
-import DownloadIcon from '@/components/icons/DownloadIcon.vue';
+import DownloadIcon from '@/assets/icons/DownloadIcon.vue';
 
 const props = defineProps({
   room: {
@@ -14,6 +14,9 @@ const props = defineProps({
 
 const currentUser = ref(null);
 const chatStore = useChatStore();
+
+const messageRequired = ref(true);
+const fileRequired = ref(true);
 
 const messages = computed(() => chatStore.getMessages(props.room));
 
@@ -47,8 +50,12 @@ const sendMessage = (e) => {
     time: new Date().toLocaleTimeString()
   };
   if (fileUrl.value) {
-    data.fileUrl = fileUrl.value;
-    data.fileName = e.target[1].files[0].name;
+    data.fileUrl = fileUrl.value.url;
+    data.fileType = fileUrl.value.type;
+    // Check if a file is selected before trying to access its name property
+    if (e.target[1].files[0]) {
+      data.fileName = e.target[1].files[0].name;
+    }
   }
   if (props.room !== 'global') {
     data.room = props.room;
@@ -57,26 +64,31 @@ const sendMessage = (e) => {
     socket.emit('globalChat', data);
   }
   // Reset the fileUrl ref
-  fileUrl.value = null;
+  // fileUrl.value = null;
 };
 
-const disabled = ref(false);
+const inputTextChanges = (e) => {
+  if (e.target.value !== '') {
+    fileRequired.value = false;
+  } else {
+    fileRequired.value = true;
+  }
+};
 
 const handleFileUpload = (e) => {
   const file = e.target.files[0];
   if (file) {
+    messageRequired.value = false;
     const reader = new FileReader();
     reader.onload = (e) => {
       const blobUrl = URL.createObjectURL(new Blob([e.target.result]));
-      // Store the blobUrl in a ref to be used when sending the message
-      fileUrl.value = blobUrl;
+      // Store the blobUrl and file type in a ref to be used when sending the message
+      fileUrl.value = { url: blobUrl, type: file.type };
       // Disable the text input
-      disabled.value = true;
     };
     reader.readAsArrayBuffer(file);
   } else {
-    // If no file is selected (i.e., the user has removed the file), enable the text input
-    disabled.value = false;
+    messageRequired.value = true;
   }
 };
 
@@ -90,10 +102,11 @@ defineExpose({ TransitionGroup });
         <div
           v-for="data in messages"
           :key="data.messageData"
-          class="p-2 border-b-2"
+          class="p-2 m-1 border-b-2 rounded-tr-2xl rounded-bl-2xl w-fit max-w-[50%] break-all"
           :class="{
-            'bg-[var(--myGreenColor)] text-white': data.messageData.username === currentUser,
-            'text-white': data.messageData.username !== currentUser
+            'bg-[var(--myGreenColor)] text-white ml-auto':
+              data.messageData.username === currentUser,
+            'text-white mr-auto border': data.messageData.username !== currentUser
           }"
         >
           <div
@@ -108,24 +121,38 @@ defineExpose({ TransitionGroup });
               <span>{{ data.messageData.time }}</span>
             </div>
             <hr class="w-full text-white pb-3" />
-            <span>{{ data.messageData.message }}</span>
+            <span v-if="!data.messageData.fileName">
+              {{ data.messageData.message }}
+            </span>
             <div
               v-if="data.messageData.fileName"
-              class="flex gap-5"
-              :class="{ 'flex-row-reverse': data.messageData.username === currentUser }"
+              class="flex gap-5 items-center"
+              :class="{ 'flex-row-reverse': data.messageData.username !== currentUser }"
             >
-              <span>{{ data.messageData.fileName }}</span>
-              <a :href="data.messageData.fileUrl" :download="data.messageData.fileName"
-                ><DownloadIcon
-              /></a>
+              <a :href="data.messageData.fileUrl" :download="data.messageData.fileName">
+                <DownloadIcon />
+              </a>
+              <span
+                v-if="data.messageData.fileName && !data.messageData.fileType.startsWith('image/')"
+                >{{ data.messageData.fileName }}
+              </span>
+              <img
+                v-if="data.messageData.fileType && data.messageData.fileType.startsWith('image/')"
+                :src="data.messageData.fileUrl"
+                alt="Image preview"
+                class="w-20 h-20 object-cover"
+              />
             </div>
+            <span v-if="data.messageData.fileName" class="pt-2">{{
+              data.messageData.message
+            }}</span>
           </div>
         </div>
       </TransitionGroup>
     </div>
     <form class="flex justify-between" @submit="sendMessage">
-      <input type="text" :disabled="disabled" required class="flex-grow" />
-      <input type="file" ref="inputFile" @change="handleFileUpload" />
+      <input type="text" @change="inputTextChanges" :required="messageRequired" class="flex-grow" />
+      <input type="file" @change="handleFileUpload" :required="fileRequired" />
       <button type="submit" class="px-4 rounded-md border-2">Send</button>
     </form>
   </div>

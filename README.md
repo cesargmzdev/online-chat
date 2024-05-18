@@ -1,30 +1,37 @@
-# Full-Stack Web Application - FGP
+# Aplicación Web de Full-Stack - TFG
 
-This project is a Full-Stack Graduation Project (FGP) for Web Applications Development. It's a comprehensive application designed to showcase the skills and knowledge acquired throughout the course.
+Este proyecto es un Proyecto de Graduación de Full-Stack (FGP) para el Desarrollo de Aplicaciones Web. Es una aplicación completa diseñada para mostrar las habilidades y conocimientos adquiridos a lo largo del curso.
 
-## Project Overview
+## Descripción del Proyecto
 
-The project is a web-based chat application that allows users to join rooms and engage in real-time conversations. It's built using modern web technologies including Vue.js for the front-end, Node.js and Express.js for the back-end, and Socket.IO for real-time communication.
+El proyecto es una aplicación de chat basada en la web que permite a los usuarios unirse a salas y participar en conversaciones en tiempo real. Está construido utilizando tecnologías web modernas, incluyendo Vue.js para el front-end, Node.js y Express.js para el back-end, y Socket.IO para la comunicación en tiempo real.
 
-## Features
+## Características
 
-- User authentication
-- Real-time chat functionality
-- Ability to join different chat rooms
-- Responsive design
+- Autenticación de usuarios: Los usuarios pueden registrarse e iniciar sesión en la aplicación. Los datos de los usuarios se almacenan de forma segura y se utilizan para personalizar la experiencia del usuario.
 
-## Getting Started
+- Mono-repositorio con cliente y servidor en el mismo proyecto: El proyecto utiliza una estructura de mono-repositorio, lo que significa que el código del cliente y del servidor se encuentra en el mismo repositorio. Esto facilita la gestión del código y la colaboración.
 
-To get started with the project:
+- Funcionalidad de chat en tiempo real: Los usuarios pueden enviar y recibir mensajes en tiempo real. Los mensajes se muestran inmediatamente sin necesidad de recargar la página.
 
-1. Clone the repository
-2. Install the dependencies with `npm install`
-3. Start the development server (for both client and server) with `npm run dev`
+- Capacidad para unirse a diferentes salas de chat: Los usuarios pueden unirse a diferentes salas de chat y participar en varias conversaciones a la vez.
 
-## Contributing
+- Diseño responsivo: La aplicación está diseñada para ser utilizada en cualquier dispositivo, incluyendo ordenadores de escritorio, portátiles, tablets y smartphones.
 
-Contributions are welcome. Please open an issue to discuss your proposed changes or open a Pull Request with your contributions.
+## Instalación y Uso
 
-## License
+Para instalar y utilizar el proyecto, sigue estos pasos:
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+1. Clona el repositorio en tu máquina local.
+2. Navega hasta el directorio del proyecto.
+3. Ejecuta `pnpm install` para instalar las dependencias del proyecto.
+4. Ejecuta `pnpm dev` para iniciar el servidor de desarrollo.
+5. Abre tu navegador y navega hasta `http://localhost:5173` para ver la aplicación en acción.
+
+## Contribuciones
+
+Las contribuciones son bienvenidas. Si tienes alguna sugerencia o mejora, no dudes en abrir un issue o un pull request.
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia ISC. Consulta el archivo LICENSE para más detalles.

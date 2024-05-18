@@ -1,5 +1,5 @@
 <script setup>
-import WebSocketLogo from '@/components/icons/WebSocketLogo.vue';
+import WebSocketLogo from '@/assets/icons/WebSocketLogo.vue';
 
 defineProps({
   customClasses: {
