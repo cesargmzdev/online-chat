@@ -21,6 +21,11 @@ const handleRoomChat = (data) => {
   chatStore.addMessage(data.messageData.room, data); // add room message to its respective room
 };
 
+socket.on('error', (e) => {
+  console.error('Error:', e);
+  alert('Error:', e);
+});
+
 onMounted(() => {
   // Set up event listeners
   socket.on('globalChat', handleGlobalChat);

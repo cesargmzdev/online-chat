@@ -2,16 +2,25 @@
   "name": "online-chat",
   "version": "1.0.0",
   "description": "monorepo online-chat",
+  "workspaces": [
+    "packages/**"
+  ],
   "scripts": {
     "dev": "pnpm --filter \"**\" dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "format": "pnpm --filter \"**\" format",
-    "lint": "pnpm --filter \"**\" lint"
+    "lint": "pnpm --filter \"**\" lint",
+    "test": "vitest --ui"
   },
   "author": "César Gómez Arroyo",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
+    "@rushstack/eslint-patch": "^1.10.3",
+    "@vitest/ui": "^1.6.0",
     "eslint": "^8.57.0",
-    "prettier": "3.2.5"
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.1.0",
+    "prettier": "3.2.5",
+    "vitest": "^1.6.0"
   }
 }

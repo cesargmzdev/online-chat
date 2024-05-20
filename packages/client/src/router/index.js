@@ -6,12 +6,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'auth',
-      component: () => import('../views/AuthView.vue')
+      component: () => import('@/views/AuthView.vue')
     },
     {
       path: '/chat',
       name: 'chat',
-      component: () => import('../views/ChatView.vue'),
+      component: () => import('@/views/ChatView.vue'),
       meta: { requiresAuth: true }
     }
   ]

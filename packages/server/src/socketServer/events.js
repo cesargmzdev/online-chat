@@ -9,11 +9,21 @@ const events = (socket) => {
   });
 
   socket.on('globalChat', (messageData) => {
+    if (messageData.message === '' || !messageData) {
+      socket.emit('error', 'MessageData received error');
+      console.log('Message cannot be empty');
+      return;
+    }
     io.emit('globalChat', { messageData: messageData });
     console.log(`Global - Message: ${messageData.message}`);
   });
 
   socket.on('roomChat', (messageData) => {
+    if (messageData.message === '' || !messageData.room || !messageData) {
+      socket.emit('error', 'MessageData received error');
+      console.log('Message cannot be empty');
+      return;
+    }
     io.to(messageData.room).emit('roomChat', { messageData: messageData });
     console.log(`Room: ${messageData.room} - Message: ${messageData.message}`);
   });

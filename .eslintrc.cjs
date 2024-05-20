@@ -5,20 +5,20 @@ module.exports = {
   root: true,
   env: {browser: true, node: true, es2021: true},
   extends: [
-    'plugin:vue/vue3-strongly-recommended',
     'eslint:recommended',
-    '@vue/eslint-config-prettier/skip-formatting'
+    'prettier',
   ],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  ignorePatterns: ['node_modules', 'dist', 'public', '.eslintrc.cjs'],
   overrides: [
     {
-      files: ['packages/server/**'],
+      files: '*.vue',
       extends: [
+        'plugin:vue/vue3-strongly-recommended',
         'eslint:recommended',
-        'prettier'
+        '@vue/eslint-config-prettier/skip-formatting'
       ],
     },
   ],

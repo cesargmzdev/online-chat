@@ -116,7 +116,7 @@ defineExpose({ TransitionGroup });
               'items-start': data.messageData.username !== currentUser
             }"
           >
-            <div class="flex justify-between w-full pb-1">
+            <div class="flex justify-between w-full pb-1 gap-3">
               <span>{{ data.messageData.username }}</span>
               <span>{{ data.messageData.time }}</span>
             </div>
