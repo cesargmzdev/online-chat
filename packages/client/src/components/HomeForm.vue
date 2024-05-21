@@ -75,7 +75,7 @@ const handleLoginSubmit = (e) => {
 <template>
   <Transition name="flip" mode="out-in">
     <div class="login-box" :key="showSignupForm">
-      <form v-if="!showSignupForm" @submit="handleLoginSubmit">
+      <form name="home-form" v-if="!showSignupForm" @submit="handleLoginSubmit">
         <legend class="pb-5 text-[var(--myGreenColor)]">LOG IN</legend>
         <div class="user-box">
           <input type="text" required="true" />

@@ -11,7 +11,7 @@ const requests = (app) => {
     const userAlreadyExists = await Users.findOne({
       username: req.body.username
     });
-    if (userAlreadyExists) return res.status(200).json({ message: 'User already exists!' });
+    if (userAlreadyExists) return res.status(409).json({ message: 'User already exists!' });
     const new_user = new Users({
       username: req.body.username,
       password: req.body.password

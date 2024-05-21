@@ -1,0 +1,4 @@
+{
+  "script": "src/server.js",
+  "ignore": ["**/*.test.js"]
+}

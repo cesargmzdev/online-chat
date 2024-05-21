@@ -104,7 +104,7 @@ defineExpose({ TransitionGroup });
           :key="data.messageData"
           class="p-2 m-1 border-b-2 rounded-tr-2xl rounded-bl-2xl w-fit max-w-[50%] break-all"
           :class="{
-            'bg-[var(--myGreenColor)] text-white ml-auto':
+            'bg-[var(--myGreenColor)] text-black ml-auto':
               data.messageData.username === currentUser,
             'text-white mr-auto border': data.messageData.username !== currentUser
           }"
