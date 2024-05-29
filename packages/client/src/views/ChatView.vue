@@ -59,9 +59,22 @@ onUnmounted(() => {
     <HeaderComponent custom-classes="pt-6" />
     <ChatViewHeader :show="show === false" :room="currentRoom" />
     <main class="flex-grow mb-2">
-      <RoomsList v-if="show" @room-changed="currentRoom = $event" @unmount="show = false" />
-      <ChatComponent v-else :room="currentRoom" />
+      <transition name="fade" mode="out-in">
+        <RoomsList v-if="show" @room-changed="currentRoom = $event" @unmount="show = false" />
+        <ChatComponent v-else :room="currentRoom" />
+      </transition>
     </main>
     <FooterComponent />
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

@@ -29,8 +29,21 @@ const props = defineProps({
     <p>Actual room: {{ props.room }}</p>
     <LogoutButton />
   </section>
-  <section class="flex justify-between" v-if="props.show">
-    <h3 class="font-tech text-[var(--myGreenColor)] self-center text-lg">Chats</h3>
-    <ClearChatMessagesButton :room="props.room" />
-  </section>
+  <transition name="fade" mode="out-in">
+    <section class="flex justify-between" v-if="props.show">
+      <h3 class="font-tech text-[var(--myGreenColor)] self-center text-lg">Chats</h3>
+      <ClearChatMessagesButton :room="props.room" />
+    </section>
+  </transition>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

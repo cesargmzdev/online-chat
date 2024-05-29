@@ -13,8 +13,4 @@ pause
 
 REM Install dependencies using pnpm or npm
 echo Installing dependencies and running the project...
-pnpm install 2>nul & pnpm dev 2>nul
-if errorlevel 1 (
-  echo pnpm is not installed, using npm instead...
-  npm install & npm run dev
-)
+pnpm install & pnpm dev
