@@ -55,10 +55,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="h-dvh w-dvw flex flex-col px-[20dvw]">
+  <div class="flex h-dvh w-dvw flex-col px-[20dvw]">
     <HeaderComponent custom-classes="pt-6" />
     <ChatViewHeader :show="show === false" :room="currentRoom" />
-    <main class="flex-grow mb-2">
+    <main class="mb-2 flex-grow">
       <transition name="fade" mode="out-in">
         <RoomsList v-if="show" @room-changed="currentRoom = $event" @unmount="show = false" />
         <ChatComponent v-else :room="currentRoom" />

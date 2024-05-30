@@ -23,7 +23,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <section class="flex justify-between p-5 border-b-2 items-center">
+  <section class="flex items-center justify-between border-b-2 p-5">
     <ShowRoomsButton />
     <p class="self-center">Logged in as: {{ user }}</p>
     <p>Actual room: {{ props.room }}</p>
@@ -31,7 +31,7 @@ const props = defineProps({
   </section>
   <transition name="fade" mode="out-in">
     <section class="flex justify-between" v-if="props.show">
-      <h3 class="font-tech text-[var(--myGreenColor)] self-center text-lg">Chats</h3>
+      <h3 class="font-tech self-center text-lg text-[var(--myGreenColor)]">Chats</h3>
       <ClearChatMessagesButton :room="props.room" />
     </section>
   </transition>

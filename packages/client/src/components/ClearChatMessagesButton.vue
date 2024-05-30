@@ -16,5 +16,5 @@ const clearChatMessages = () => {
 </script>
 
 <template>
-  <button class="border-2 rounded-md p-1 m-2" @click="clearChatMessages">Clear</button>
+  <button class="m-2 rounded-md border-2 p-1" @click="clearChatMessages">Clear</button>
 </template>

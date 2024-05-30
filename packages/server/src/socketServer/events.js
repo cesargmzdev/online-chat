@@ -9,7 +9,7 @@ const events = (socket) => {
   });
 
   socket.on('globalChat', (messageData) => {
-    if (messageData.message === '' || !messageData) {
+    if ((messageData.message === '' && messageData.fileUrl === '') || !messageData) {
       socket.emit('error', 'MessageData received error');
       console.log('Message cannot be empty');
       return;
@@ -19,7 +19,11 @@ const events = (socket) => {
   });
 
   socket.on('roomChat', (messageData) => {
-    if (messageData.message === '' || !messageData.room || !messageData) {
+    if (
+      (messageData.message === '' && messageData.fileUrl === '') ||
+      !messageData.room ||
+      !messageData
+    ) {
       socket.emit('error', 'MessageData received error');
       console.log('Message cannot be empty');
       return;

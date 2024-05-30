@@ -3,7 +3,7 @@ const Year = new Date().getFullYear();
 </script>
 <template>
   <footer>
-    <h2 class="text-[var(--myGreenColor)] font-tech text-xl text-center pb-16">
+    <h2 class="font-tech pb-16 text-center text-xl text-[var(--myGreenColor)]">
       TFG DAW - &copy; César Gómez {{ Year }}
     </h2>
   </footer>

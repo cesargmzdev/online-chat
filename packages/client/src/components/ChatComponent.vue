@@ -96,17 +96,17 @@ defineExpose({ TransitionGroup });
 </script>
 
 <template>
-  <div class="border-2 rounded-md relative w-full h-full flex flex-col">
-    <div class="flex-grow h-48 overflow-y-auto" id="chatDiv">
+  <div class="relative flex h-full w-full flex-col rounded-md border-2">
+    <div class="h-48 flex-grow overflow-y-auto" id="chatDiv">
       <TransitionGroup name="list" tag="div">
         <div
           v-for="data in messages"
           :key="data.messageData"
-          class="p-2 m-1 border-b-2 rounded-tr-2xl rounded-bl-2xl w-fit max-w-[50%] break-all"
+          class="m-1 w-fit max-w-[50%] break-all rounded-bl-2xl rounded-tr-2xl border-b-2 p-2"
           :class="{
-            'bg-[var(--myGreenColor)] text-black ml-auto':
+            'ml-auto bg-[var(--myGreenColor)] text-black':
               data.messageData.username === currentUser,
-            'text-white mr-auto border': data.messageData.username !== currentUser
+            'mr-auto border text-white': data.messageData.username !== currentUser
           }"
         >
           <div
@@ -116,17 +116,17 @@ defineExpose({ TransitionGroup });
               'items-start': data.messageData.username !== currentUser
             }"
           >
-            <div class="flex justify-between w-full pb-1 gap-3">
+            <div class="flex w-full justify-between gap-3 pb-1">
               <span>{{ data.messageData.username }}</span>
               <span>{{ data.messageData.time }}</span>
             </div>
-            <hr class="w-full text-white pb-3" />
+            <hr class="w-full pb-3 text-white" />
             <span v-if="!data.messageData.fileName">
               {{ data.messageData.message }}
             </span>
             <div
               v-if="data.messageData.fileName"
-              class="flex gap-5 items-center"
+              class="flex items-center gap-5"
               :class="{ 'flex-row-reverse': data.messageData.username !== currentUser }"
             >
               <a :href="data.messageData.fileUrl" :download="data.messageData.fileName">
@@ -140,7 +140,7 @@ defineExpose({ TransitionGroup });
                 v-if="data.messageData.fileType && data.messageData.fileType.startsWith('image/')"
                 :src="data.messageData.fileUrl"
                 alt="Image preview"
-                class="w-20 h-20 object-cover"
+                class="h-20 w-20 object-cover"
               />
             </div>
             <span v-if="data.messageData.fileName" class="pt-2">{{
@@ -153,7 +153,7 @@ defineExpose({ TransitionGroup });
     <form class="flex justify-between" @submit="sendMessage">
       <input type="text" @change="inputTextChanges" :required="messageRequired" class="flex-grow" />
       <input type="file" @change="handleFileUpload" :required="fileRequired" />
-      <button type="submit" class="px-4 rounded-md border-2">Send</button>
+      <button type="submit" class="rounded-md border-2 px-4">Send</button>
     </form>
   </div>
 </template>

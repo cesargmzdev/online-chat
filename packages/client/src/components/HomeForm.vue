@@ -85,7 +85,7 @@ const handleLoginSubmit = (e) => {
           <input type="password" required="true" />
           <label>Password</label>
         </div>
-        <section class="flex flex-col lg:flex-row justify-center">
+        <section class="flex flex-col justify-center lg:flex-row">
           <button id="formButtonLogin" type="submit">
             LOGIN
             <span></span>
@@ -109,7 +109,7 @@ const handleLoginSubmit = (e) => {
           <input type="password" required="true" />
           <label>Password</label>
         </div>
-        <section class="flex flex-col lg:flex-row justify-center">
+        <section class="flex flex-col justify-center lg:flex-row">
           <button id="formButtonLogin" type="submit">
             SIGN UP
             <span></span>

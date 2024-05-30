@@ -76,7 +76,7 @@ const joinRoom = (e) => {
             >
               <form @submit="joinRoom">
                 <div class="bg-[var(--myBlackColor)] px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                  <DialogTitle class="text-lg font-semibold text-white pb-3">Join Room</DialogTitle>
+                  <DialogTitle class="pb-3 text-lg font-semibold text-white">Join Room</DialogTitle>
                   <input
                     type="text"
                     placeholder="Enter user to chat with"
@@ -85,7 +85,7 @@ const joinRoom = (e) => {
                   />
                 </div>
                 <div
-                  class="bg-[var(--myBlackColor)] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 w-full justify-between"
+                  class="w-full justify-between bg-[var(--myBlackColor)] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
                 >
                   <button
                     type="submit"

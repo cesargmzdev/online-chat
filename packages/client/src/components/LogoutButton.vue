@@ -23,5 +23,5 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <button type="button" class="border-2 rounded-md p-1 m-2" @click="handleLogout">log out</button>
+  <button type="button" class="m-2 rounded-md border-2 p-1" @click="handleLogout">log out</button>
 </template>
