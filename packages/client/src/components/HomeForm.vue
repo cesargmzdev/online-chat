@@ -62,6 +62,7 @@ const handleLoginSubmit = (e) => {
       } else {
         sessionStorage.setItem('jwt', data.token);
         socket.connect();
+        socket.emit('setUserId', sessionStorage.getItem('jwt'));
         alert(data.message);
         router.push('/chat');
       }

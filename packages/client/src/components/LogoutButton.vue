@@ -16,6 +16,7 @@ const handleLogout = async () => {
   sessionStorage.removeItem('rooms');
   chatStore.clearAllMessages();
   sessionStorage.removeItem('jwt');
+  chatStore.clearAllNotifications();
   socket.disconnect();
   alert('logged out');
   router.push('/');

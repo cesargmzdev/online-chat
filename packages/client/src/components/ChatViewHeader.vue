@@ -4,7 +4,7 @@ import LogoutButton from '@/components/LogoutButton.vue';
 import ShowRoomsButton from '@/components/ShowRoomsButton.vue';
 import getCurrentUser from '@/utils/getCurrentUser';
 import ClearChatMessagesButton from './ClearChatMessagesButton.vue';
-// import { socket } from '@/utils/clientSocket';
+import NotificationComponent from '@/components/NotificationsComponent.vue';
 
 let user = ref('');
 onMounted(async () => {
@@ -27,6 +27,7 @@ const props = defineProps({
     <ShowRoomsButton />
     <p class="self-center">Logged in as: {{ user }}</p>
     <p>Actual room: {{ props.room }}</p>
+    <NotificationComponent />
     <LogoutButton />
   </section>
   <transition name="fade" mode="out-in">

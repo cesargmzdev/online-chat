@@ -1,11 +1,14 @@
 import { io } from '##/socketServer/socketServerConfig.js';
 import { fetchUser, fetchLoggedUser, listRooms } from '##/socketServer/utils.js';
 
+const USERS = new Map();
+
 const events = (socket) => {
-  socket.on('setUsername', (username) => {
-    const users = {};
-    users[username] = socket.id;
-    console.log('User connected', socket.id, io.engine.clientsCount);
+  socket.on('setUserId', async (loggedUserToken) => {
+    const user = await fetchLoggedUser(loggedUserToken);
+    console.log(`new connection ${user}`);
+    USERS.set(user, socket.id);
+    console.log(`socket ${user} connected`, USERS.get(user), io.engine.clientsCount);
   });
 
   socket.on('globalChat', (messageData) => {
@@ -86,6 +89,11 @@ const events = (socket) => {
               time: time
             }
           });
+          // Send a notification to the invited user
+          io.to(USERS.get(fetchedUserDataUsername)).emit(
+            'newRoomNotification',
+            `${loggedUsername} created the room ${room} and invited you to join the room`
+          );
         }
         listRooms(socket);
         return;
