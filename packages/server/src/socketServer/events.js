@@ -92,7 +92,7 @@ const events = (socket) => {
           // Send a notification to the invited user
           io.to(USERS.get(fetchedUserDataUsername)).emit(
             'newRoomNotification',
-            `${loggedUsername} created the room ${room} and invited you to join the room`
+            `${loggedUsername} created the room ${room} with you`
           );
         }
         listRooms(socket);
